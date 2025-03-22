@@ -1,20 +1,24 @@
 'use strict';
 
-const largeImg = document.querySelector('.gallery__large-img');
+document.addEventListener('DOMContentLoaded', function () {
+  const largeImg = document.getElementById('largeImg');
+  const thumbsContainer = document.getElementById('thumbs');
 
-function handleClick() {
-  event.preventDefault();
+  thumbsContainer.addEventListener('click', function () {
+    event.preventDefault();
 
-  const img = this.querySelector('img');
+    let target = event.target;
 
-  if (img) {
-    largeImg.src = this.href;
-    largeImg.alt = img.alt;
-  }
-}
+    if (target.tagName === 'IMG') {
+      target = target.parentElement;
+    }
 
-const linkList = document.querySelectorAll('a.list-item__link');
+    if (target.tagName === 'A') {
+      const imageUrl = target.getAttribute('href');
 
-linkList.forEach((link) => {
-  link.addEventListener('click', handleClick);
+      largeImg.src = imageUrl;
+
+      largeImg.alt = target.getAttribute('title') || 'main image';
+    }
+  });
 });
